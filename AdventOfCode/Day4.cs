@@ -11,10 +11,12 @@ namespace AdventOfCode
         {
             int boardCounter = 0;
             int columCounter = 0;
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\day4.txt").ToList();
+            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day4.txt").ToList();
             List<int> numbersToDraw = fileContent[0].Split(",").ToList().Select(x => int.Parse(x)).ToList();
-            Dictionary<int, BingoTile[,]> bingoBoards = new Dictionary<int, BingoTile[,]>();
-            bingoBoards.Add(boardCounter, new BingoTile[5, 5]);
+            Dictionary<int, BingoTile[,]> bingoBoards = new Dictionary<int, BingoTile[,]>
+            {
+                { boardCounter, new BingoTile[5, 5] }
+            };
 
             for (int i = 2; i < fileContent.Count; i++)
             {
@@ -60,7 +62,7 @@ namespace AdventOfCode
 
         public override void Solution2()
         {
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\day4.txt").ToList();
+            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day4.txt").ToList();
             List<int> numbersToDraw = fileContent[0].Split(",").ToList().Select(x => int.Parse(x)).ToList();
             Dictionary<int, BingoTile[,]> bingoBoards = new Dictionary<int, BingoTile[,]>();
             int boardCounter = 0;
