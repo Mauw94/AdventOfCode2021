@@ -9,7 +9,7 @@ namespace AdventOfCode
     {
         public override void Solution1()
         {
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day3.txt").ToList();
+            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day3.txt").ToList();
             List<int> first = new List<int>();
             List<int> second = new List<int>();
             List<int> third = new List<int>();
@@ -88,11 +88,11 @@ namespace AdventOfCode
 
         public override void Solution2()
         {
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day3.txt").ToList();
+            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day3.txt").ToList();
             int globalOxygenCounter = 0;
             StartCalculations(fileContent, globalOxygenCounter, true);
 
-            List<string> fileContent2 = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day3.txt").ToList();
+            List<string> fileContent2 = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day3.txt").ToList();
             int globalCO2Counter = 0;
             StartCalculations(fileContent2, globalCO2Counter, false);
         }

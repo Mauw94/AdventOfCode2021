@@ -15,7 +15,7 @@ namespace AdventOfCode
         {
             int depth = 0;
             int horizontalPos = 0;
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day2.txt").ToList();
+            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day2.txt").ToList();
 
             foreach (var content in fileContent)
             {
@@ -39,7 +39,7 @@ namespace AdventOfCode
             int depth = 0;
             int horizontalPos = 0;
             int aim = 0;
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day2.txt").ToList();
+            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day2.txt").ToList();
 
             foreach (var content in fileContent)
             {

@@ -10,7 +10,7 @@ namespace AdventOfCode
 
         public Day1()
         {
-            string[] fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode\\input\\day1.txt");
+            string[] fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day1.txt");
             _depthNumbers = fileContent.Select(x => int.Parse(x)).ToArray();
         }
 
