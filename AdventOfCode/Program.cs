@@ -19,3 +19,9 @@ using AdventOfCode2021;
 
 var day5 = new Day5();
 day5.Solution1();
+day5.Solution2();
+
+
+var day6 = new Day6();
+day6.Solution1();
+day6.Solution2();
