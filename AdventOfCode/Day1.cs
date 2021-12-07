@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AdventOfCode
 {
-    public class Day1 : IBase
+    public class Day1 : Base
     {
         private int[] _depthNumbers;
 

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AdventOfCode
 {
-    public class Day4 : IBase
+    public class Day4 : Base
     {
         public override void Solution1()
         {

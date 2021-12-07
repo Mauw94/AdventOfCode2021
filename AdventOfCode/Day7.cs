@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AdventOfCode2021
 {
-    public class Day7 : IBase
+    public class Day7 : Base
     {
         private readonly List<int> _crabPositions;
         private bool _foundBestPosition = false;

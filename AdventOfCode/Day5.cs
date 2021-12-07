@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AdventOfCode2021
 {
-    public class Day5 : IBase
+    public class Day5 : Base
     {
         private readonly int[][] _lines;
         private Dictionary<(int, int), int> _lineCoordinates;

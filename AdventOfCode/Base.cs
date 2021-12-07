@@ -2,7 +2,7 @@
 
 namespace AdventOfCode
 {
-    public class IBase
+    public class Base
     {
         public virtual void Solution1() { }
         public virtual void Solution2() { }

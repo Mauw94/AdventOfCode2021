@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2021
 {
-    public class Day6 : IBase
+    public class Day6 : Base
     {
         private List<int> _initialState;
         private List<int> _initialStateCopy;
