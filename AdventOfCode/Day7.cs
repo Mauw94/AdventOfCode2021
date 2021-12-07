@@ -1,16 +1,14 @@
-﻿using System;
+﻿using AdventOfCode;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdventOfCode;
 
 namespace AdventOfCode2021
 {
     public class Day7 : IBase
     {
-        List<int> _crabPositions;
+        private readonly List<int> _crabPositions;
         private bool _foundBestPosition = false;
         private int _resultSol2 = 0;
 
@@ -20,15 +18,17 @@ namespace AdventOfCode2021
             var input = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day7.txt");
             foreach (var inp in input)
             {
-                inp.Split(",").Select(x => int.Parse(x)).ToList()
-                .ForEach(x => _crabPositions.Add(x));
+                inp.Split(",")
+                    .Select(x => int.Parse(x))
+                    .ToList()
+                    .ForEach(x => _crabPositions.Add(x));
             }
         }
 
         public override void Solution1()
         {
-            int median = GetMedian(_crabPositions.ToArray());
             int totalFuelCost = 0;
+            int median = GetMedian(_crabPositions.ToArray());
 
             for (int i = 0; i < _crabPositions.Count; i++)
             {
@@ -47,6 +47,7 @@ namespace AdventOfCode2021
             var medianFuelCost = GetMedian(_crabPositions.ToArray());
 
             CalculateFuelCost(_crabPositions, medianFuelCost, possibleFuelCosts);
+
             base.LogResults(7, 2, _resultSol2.ToString());
         }
 
@@ -73,15 +74,17 @@ namespace AdventOfCode2021
                 {
                     _resultSol2 = possibleFuelCosts.Last();
                     _foundBestPosition = true;
-                    return;
                 }
-                possibleFuelCosts.Add(totalFuelCost);
-                medianFuelCost++;
-                CalculateFuelCost(crabPositions, medianFuelCost, possibleFuelCosts);
+                else
+                {
+                    possibleFuelCosts.Add(totalFuelCost);
+                    medianFuelCost++;
+                    CalculateFuelCost(crabPositions, medianFuelCost, possibleFuelCosts);
+                }
             }
         }
 
-        private int GetMedian(int[] source)
+        private static int GetMedian(int[] source)
         {
             int[] sorted = (int[])source.Clone();
             Array.Sort(sorted);
