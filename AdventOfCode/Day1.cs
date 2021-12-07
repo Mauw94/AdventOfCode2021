@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
-namespace AdventOfCode
+namespace AdventOfCode2021
 {
     public class Day1 : Base
     {

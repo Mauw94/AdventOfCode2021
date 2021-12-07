@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode
+namespace AdventOfCode2021
 {
     public class Day2 : Base
     {
