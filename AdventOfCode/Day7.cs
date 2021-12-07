@@ -52,20 +52,19 @@ namespace AdventOfCode2021
 
         private void CalculateFuelCost(List<int> crabPositions, int medianFuelCost, List<int> possibleFuelCosts)
         {
-            var totalFuelCost = 0;
             while (!_foundBestPosition)
             {
+                var totalFuelCost = 0;
                 for (int i = 0; i < _crabPositions.Count; i++)
                 {
                     var fuelCost = _crabPositions[i] - medianFuelCost;
                     if (fuelCost < 0) fuelCost *= -1;
                     var adjustFuelCost = 0;
-                    var previousAdded = 0;
+                    var fuelAddedPreviousStep = 0;
                     for (int j = 0; j < fuelCost; j++)
                     {
-                        var temp = previousAdded;
-                        previousAdded = temp + 1;
-                        adjustFuelCost += previousAdded;
+                        fuelAddedPreviousStep++;
+                        adjustFuelCost += fuelAddedPreviousStep;
                     }
 
                     totalFuelCost += adjustFuelCost;
