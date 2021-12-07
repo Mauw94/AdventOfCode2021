@@ -50,6 +50,30 @@ namespace AdventOfCode2021
             base.LogResults(7, 2, _resultSol2.ToString());
         }
 
+        // Lol...
+        public void EasierSolution2()
+        {
+            int totalFuelCost = 0;
+            int mean = _crabPositions.Sum() / _crabPositions.Count;
+
+            for (int i = 0; i < _crabPositions.Count; i++)
+            {
+                var fuelCost = _crabPositions[i] - mean;
+                if (fuelCost < 0) fuelCost *= -1;
+                var adjustFuelCost = 0;
+                var fuelAddedPreviousStep = 0;
+                for (int j = 0; j < fuelCost; j++)
+                {
+                    fuelAddedPreviousStep++;
+                    adjustFuelCost += fuelAddedPreviousStep;
+                }
+
+                totalFuelCost += adjustFuelCost;
+            }
+
+            base.LogResults(7, 3, _resultSol2.ToString());
+        }
+
         private void CalculateFuelCost(List<int> crabPositions, int medianFuelCost, List<int> possibleFuelCosts)
         {
             while (!_foundBestPosition)
