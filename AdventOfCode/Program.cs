@@ -34,5 +34,9 @@
 //day8.Solution1();
 //day8.Solution2();
 
-var day9 = new Day9();
+//var day9 = new Day9();
+//day9.Solution1();
+
+var day9 = new Day9_with_record();
 day9.Solution1();
+day9.Solution2();
