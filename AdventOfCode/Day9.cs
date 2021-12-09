@@ -9,30 +9,33 @@ namespace AdventOfCode2021
 {
     public class Day9 : Base
     {
-        private List<int> _locationPoints;
+        private int[,] _locationPoints;
 
         public Day9()
         {
-            _locationPoints = new();
             string[] input = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day9.txt");
-            foreach (var line in input)
+
+            _locationPoints = new int[input.Length, input[0].Length];
+
+            for (int i = 0; i < input.Length; i++)
             {
-                foreach (var point in line)
+                for (int j = 0; j < input[i].Length; j++)
                 {
-                    _locationPoints.Add(int.Parse(point.ToString()));
+                    _locationPoints[i, j] = Convert.ToInt32(input[i][j].ToString());
                 }
             }
         }
 
         public override void Solution1()
         {
-            var lowPoints = 0;
-            for (int i = 0; i < _locationPoints.Count; i++)
-            {
-                if (i == 0 || i == _locationPoints.Count) continue;
+            int lowPoints = 0;
+            int riskLevel = 0;
 
-                if (_locationPoints[i] < _locationPoints[i - 1] && _locationPoints[i] < _locationPoints[i + 1])
-                    lowPoints++;
+            for (int i = 0; i < _locationPoints.GetLength(0); i++)
+            {
+                for (int j = 0; j < _locationPoints.GetLength(1); j++)
+                {
+                }
             }
         }
 
