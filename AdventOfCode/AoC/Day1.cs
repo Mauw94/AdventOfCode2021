@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Day1 : Base
+    public class Day1 : AdventBase
     {
         private int[] _depthNumbers;
 
@@ -28,7 +28,7 @@ namespace AdventOfCode2021
                 }
             }
 
-            base.LogResults(1, 1, increased.ToString());
+            LogResults(1, 1, increased.ToString());
         }
 
         public override void Solution2()
@@ -56,7 +56,7 @@ namespace AdventOfCode2021
                 }
             }
 
-            base.LogResults(1, 2, increased.ToString());
+            LogResults(1, 2, increased.ToString());
         }
     }
 }

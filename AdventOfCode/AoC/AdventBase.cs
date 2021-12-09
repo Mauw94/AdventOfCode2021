@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Base
+    public class AdventBase : IAdventBase
     {
         public virtual void Solution1()
         {

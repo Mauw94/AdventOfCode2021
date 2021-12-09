@@ -1,4 +1,4 @@
-﻿using AdventOfCode2021;
+﻿using AdventOfCode2021.AoC;
 
 //var day1 = new Day1();
 //day1.Solution1();
@@ -37,6 +37,6 @@
 //var day9 = new Day9();
 //day9.Solution1();
 
-var day9 = new Day9_with_record();
+var day9 = new Day9();
 day9.Solution1();
 day9.Solution2();

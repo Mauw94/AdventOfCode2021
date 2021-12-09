@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Day7 : Base
+    public class Day7 : AdventBase
     {
         private readonly List<int> _crabPositions;
         private bool _foundBestPosition = false;

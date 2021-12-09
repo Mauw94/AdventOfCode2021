@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Day5 : Base
+    public class Day5 : AdventBase
     {
         private readonly int[][] _lines;
         private Dictionary<(int, int), int> _lineCoordinates;

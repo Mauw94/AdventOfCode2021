@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Day6 : Base
+    public class Day6 : AdventBase
     {
         private List<int> _initialState;
         private List<int> _initialStateCopy;

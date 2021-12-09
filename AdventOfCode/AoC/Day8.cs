@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Day8 : Base
+    public class Day8 : AdventBase
     {
         private List<string> _outputValues;
         private List<string> _segments;

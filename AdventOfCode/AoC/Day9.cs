@@ -1,23 +1,19 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
     public record Coord(int Row, int Col);
 
-    public class Day9_with_record : Base
+    public class Day9 : AdventBase
     {
-
         readonly int[][] _heights;
         readonly int _floorRows;
         readonly int _floorCols;
 
-        public Day9_with_record()
+        public Day9()
         {
-            string[] input = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day9-real.txt");
-
-            _heights = input
+            _heights = Common.GetInput(9)
                 .Select(ToDigitArray)
                 .ToArray();
 

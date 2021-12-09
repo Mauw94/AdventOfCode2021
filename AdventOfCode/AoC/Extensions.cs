@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
     public static class Extensions
     {

@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.AoC
 {
-    public class Day2 : Base
+    public class Day2 : AdventBase
     {
         public Day2()
         {
@@ -19,7 +19,7 @@ namespace AdventOfCode2021
             foreach (var content in fileContent)
             {
                 var space = content.IndexOf(" ");
-                var move = content.Substring(0, space);
+                var move = content[..space];
                 var amount = int.Parse(content.Substring(space + 1, 1));
 
                 if (move == "forward")
@@ -43,7 +43,7 @@ namespace AdventOfCode2021
             foreach (var content in fileContent)
             {
                 var space = content.IndexOf(" ");
-                var move = content.Substring(0, space);
+                var move = content[..space];
                 var amount = int.Parse(content.Substring(space + 1, 1));
 
                 if (move == "forward")
