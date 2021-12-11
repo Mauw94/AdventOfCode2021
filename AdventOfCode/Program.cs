@@ -38,6 +38,10 @@
 //day9.Solution1();
 //day9.Solution2();
 
-var day10 = new Day10();
-day10.Solution1();
-day10.Solution2();
+//var day10 = new Day10();
+//day10.Solution1();
+//day10.Solution2();
+
+var day11 = new Day11();
+day11.Solution1();
+day11.Solution2();
