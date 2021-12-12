@@ -6,17 +6,15 @@ namespace AdventOfCode2021.AoC
 {
     class Cave
     {
-        public bool IsSmall { get; set; }
+        public bool IsSmall => Char.IsLower(Name.ToCharArray()[0]);
         public bool IsVisited { get; set; }
         public bool IsStart { get; set; }
         public string Name { get; private set; }
         public int VisitCount { get; set; } = 0;
 
-        public Cave(string name, bool isSmall)
+        public Cave(string name)
         {
-            IsSmall = isSmall;
             Name = name;
-
             CheckForStart();
         }
 
@@ -29,6 +27,11 @@ namespace AdventOfCode2021.AoC
         public List<Cave> Caves { get; private set; }
         public int CaveCount() => Caves.Count;
 
+        /// <summary>
+        /// Sep up to create a Depth-first search structure.
+        /// </summary>
+        /// <param name="caves">All the caves available to search through.</param>
+        /// <param name="neighbours">All neighbour pairs in the system.</param>
         public CaveMap(IEnumerable<Cave> caves, IEnumerable<Tuple<string, string>> neighbours)
         {
             Caves = caves.ToList();
@@ -56,83 +59,126 @@ namespace AdventOfCode2021.AoC
         }
     }
 
-    class Path
+    class PathBuilder
     {
-        public int PathCounter { get; private set; }
-        private Cave _uniqueSmallCave;
+        public int PathCounter { get; private set; } = 0;
 
-        public Path()
+        private readonly Dictionary<string, List<int>> _pastVisits = new();
+        private readonly CaveMap _map;
+        private readonly int _part;
+
+        /// <summary>
+        /// Pathbuilder classes containing logic to calculate all the valid paths.
+        /// </summary>
+        /// <param name="map">The cavemap system.</param>
+        /// <param name="part">Part 1 || part 2.</param>
+        public PathBuilder(CaveMap map, int part)
         {
-            PathCounter = 0;
+            _map = map;
+            _part = part;
+
+            foreach (var cave in _map.Caves)
+                _pastVisits.Add(cave.Name, new());
         }
 
-        public void CalculatePaths(CaveMap map)
+        public int CalculatePaths()
         {
+            // List used to log all the different paths in the console.
             List<string> pathList = new();
             pathList.Add("start");
+            Search("start", pathList, 1);
 
-            Calculate("start", "end", map, pathList);
+            return PathCounter;
         }
 
-        void Calculate(string start, string end, CaveMap map, List<string> pathList)
+        /// <summary>
+        /// Calculate the different paths using the cavemap system.
+        /// </summary>
+        /// <param name="start">Start for every route.</param>
+        /// <param name="pathList">Pathlist for logging.</param>
+        /// <param name="steps">Steps.</param>
+        void Search(string start, List<string> pathList, int steps)
         {
-            if (start == end)
-            {
-                PathCounter++;
-                Console.WriteLine(string.Join(" ", pathList));
-                return;
-            }
+            var cave = _map.Caves.FirstOrDefault(c => c.Name == start);
 
-            var cave = map.Caves.First(c => c.Name == start);
-
+            // Keep track of the small caves visits. "Big" caves can be ignored.
             if (cave.IsSmall)
-                cave.IsVisited = true;
+                _pastVisits[cave.Name].Add(steps);
 
-            cave.VisitCount++;
-
-            foreach (var neighbour in map.NeighbourList[start])
+            foreach (var neighbour in _map.NeighbourList[start])
             {
-                var nb = map.Caves.FirstOrDefault(c => c.Name == neighbour);
-                if (!nb.IsVisited)
-                {
+                var nextCave = _map.Caves.FirstOrDefault(c => c.Name == neighbour);
 
-                    pathList.Add(nb.Name);
-                    Calculate(neighbour, end, map, pathList);
-                    pathList.Remove(nb.Name);
+                if (nextCave.Name == "end")
+                {
+                    PathCounter++;
+                    Console.WriteLine(string.Join(" ", pathList));
+                    continue;
+                }
+
+                if (nextCave.IsSmall)
+                {
+                    if (_pastVisits[nextCave.Name].Any())
+                    {
+                        // In p1 a small cave can only be visited once.
+                        if (_part == 1)
+                            continue;
+
+                        // In p2 only ONE small cave can be visited more than once.
+                        if (_pastVisits.Any(c => c.Value.Count > 1))
+                            continue;
+                    }
+                }
+
+                // Don't add start as another neighbour. Skip over it.
+                if (nextCave.IsStart)
+                    continue;
+
+                pathList.Add(nextCave.Name);
+                Search(neighbour, pathList, steps + 1);
+                pathList.Remove(nextCave.Name);
+
+                foreach (var visits in _pastVisits)
+                {
+                    _pastVisits[visits.Key] = visits.Value
+                        .Where(s => s <= steps)
+                        .ToList();
                 }
             }
 
-            cave.IsVisited = false;
         }
     }
 
     public class Day12 : AdventBase
     {
         private readonly List<Cave> _caves;
-        private readonly List<Tuple<string, string>> _edges;
+        private readonly List<Tuple<string, string>> _neighbours;
         private readonly List<string> _usedNames;
 
         public Day12()
         {
             _caves = new();
             _usedNames = new();
-            _edges = new();
-            List<string> input = Common.GetInput(12);
-            foreach (var caves in input)
+            _neighbours = new();
+
+            foreach (var caves in Common.GetInput(12))
             {
                 CreateCaves(caves);
             }
         }
 
+        /// <summary>
+        /// Create the different unique cave systems and the neighbours bases on input.
+        /// </summary>
         void CreateCaves(string input)
         {
             var caves = input.Split("-");
-            var cave1 = new Cave(caves[0], !char.IsUpper(caves[0].ToCharArray()[0]));
-            var cave2 = new Cave(caves[1], !char.IsUpper(caves[1].ToCharArray()[0]));
+            var cave1 = new Cave(caves[0]);
+            var cave2 = new Cave(caves[1]);
             AddNewCave(caves[0], cave1);
             AddNewCave(caves[1], cave2);
 
-            _edges.Add(Tuple.Create(cave1.Name, cave2.Name));
+            _neighbours.Add(Tuple.Create(cave1.Name, cave2.Name));
         }
 
         void AddNewCave(string caveName, Cave cave)
@@ -146,16 +192,20 @@ namespace AdventOfCode2021.AoC
 
         public override void Solution1()
         {
-            var caveMap = new CaveMap(_caves, _edges);
-            var path = new Path();
-            path.CalculatePaths(caveMap);
+            var caveMap = new CaveMap(_caves, _neighbours);
+            var pathBuilder = new PathBuilder(caveMap, 1);
+            var paths = pathBuilder.CalculatePaths();
 
-            LogResults(12, 1, path.PathCounter.ToString());
+            LogResults(12, 1, paths.ToString());
         }
 
         public override void Solution2()
         {
-            base.Solution2();
+            var caveMap = new CaveMap(_caves, _neighbours);
+            var pathBuilder = new PathBuilder(caveMap, 2);
+            var paths = pathBuilder.CalculatePaths();
+
+            LogResults(12, 2, paths.ToString());
         }
     }
 }

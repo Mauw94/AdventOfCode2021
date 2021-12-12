@@ -48,3 +48,4 @@
 
 var day12 = new Day12();
 day12.Solution1();
+day12.Solution2();
