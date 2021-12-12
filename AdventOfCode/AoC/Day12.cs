@@ -7,18 +7,13 @@ namespace AdventOfCode2021.AoC
     class Cave
     {
         public bool IsSmall => Char.IsLower(Name.ToCharArray()[0]);
-        public bool IsVisited { get; set; }
-        public bool IsStart { get; set; }
+        public bool IsStart => Name == "start";
         public string Name { get; private set; }
-        public int VisitCount { get; set; } = 0;
 
         public Cave(string name)
         {
             Name = name;
-            CheckForStart();
         }
-
-        bool CheckForStart() => IsStart = (Name == "start");
     }
 
     class CaveMap
@@ -42,11 +37,19 @@ namespace AdventOfCode2021.AoC
                 AddNeighbour(neighbour);
         }
 
+        /// <summary>
+        /// Add all unique caves as key to the neighbour list.
+        /// </summary>
+        /// <param name="cave">Cave name.</param>
         public void AddCave(string cave)
         {
             NeighbourList[cave] = new HashSet<string>();
         }
 
+        /// <summary>
+        /// Add neighbours to each cave.
+        /// </summary>
+        /// <param name="neighbour">Neighbour.</param>
         public void AddNeighbour(Tuple<string, string> neighbour)
         {
             if (NeighbourList.ContainsKey(neighbour.Item1)
@@ -82,6 +85,10 @@ namespace AdventOfCode2021.AoC
                 _pastVisits.Add(cave.Name, new());
         }
 
+        /// <summary>
+        /// Start path calculation.
+        /// </summary>
+        /// <returns>Amount of paths found.</returns>
         public int CalculatePaths()
         {
             // List used to log all the different paths in the console.
@@ -108,8 +115,10 @@ namespace AdventOfCode2021.AoC
 
             foreach (var neighbour in _map.NeighbourList[start])
             {
+                // Get the next neighbour of starting cave.
                 var nextCave = _map.Caves.FirstOrDefault(c => c.Name == neighbour);
 
+                // Path is done.
                 if (nextCave.Name == "end")
                 {
                     PathCounter++;
@@ -126,7 +135,7 @@ namespace AdventOfCode2021.AoC
                         if (_part == 1)
                             continue;
 
-                        // In p2 only ONE small cave can be visited more than once.
+                        // In p2 only ONE small cave can be visited more than once, max twice.
                         if (_pastVisits.Any(c => c.Value.Count > 1))
                             continue;
                     }
@@ -136,10 +145,13 @@ namespace AdventOfCode2021.AoC
                 if (nextCave.IsStart)
                     continue;
 
+                // Search the next neighbours, neighbours.
+                // Pathlist is only used for logging the paths to the console.
                 pathList.Add(nextCave.Name);
                 Search(neighbour, pathList, steps + 1);
                 pathList.Remove(nextCave.Name);
 
+                // Only keep past visits values smaller or equal our current steps.
                 foreach (var visits in _pastVisits)
                 {
                     _pastVisits[visits.Key] = visits.Value
@@ -153,10 +165,15 @@ namespace AdventOfCode2021.AoC
 
     public class Day12 : AdventBase
     {
+        // All unique caves in the system.
         private readonly List<Cave> _caves;
+        // The neighbour pairs in the system.
         private readonly List<Tuple<string, string>> _neighbours;
         private readonly List<string> _usedNames;
 
+        /// <summary>
+        /// Initialize day12.
+        /// </summary>
         public Day12()
         {
             _caves = new();
@@ -183,6 +200,11 @@ namespace AdventOfCode2021.AoC
             _neighbours.Add(Tuple.Create(cave1.Name, cave2.Name));
         }
 
+        /// <summary>
+        /// Add new cave to the list.
+        /// </summary>
+        /// <param name="caveName">Cave name.</param>
+        /// <param name="cave">Cave object.</param>
         void AddNewCave(string caveName, Cave cave)
         {
             if (!_usedNames.Contains(caveName))
