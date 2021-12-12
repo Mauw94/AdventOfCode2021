@@ -169,7 +169,6 @@ namespace AdventOfCode2021.AoC
         private readonly List<Cave> _caves;
         // The neighbour pairs in the system.
         private readonly List<Tuple<string, string>> _neighbours;
-        private readonly List<string> _usedNames;
 
         /// <summary>
         /// Initialize day12.
@@ -177,13 +176,10 @@ namespace AdventOfCode2021.AoC
         public Day12()
         {
             _caves = new();
-            _usedNames = new();
             _neighbours = new();
 
             foreach (var caves in Common.GetInput(12))
-            {
                 CreateCaves(caves);
-            }
         }
 
         /// <summary>
@@ -194,8 +190,8 @@ namespace AdventOfCode2021.AoC
             var caves = input.Split("-");
             var cave1 = new Cave(caves[0]);
             var cave2 = new Cave(caves[1]);
-            AddNewCave(caves[0], cave1);
-            AddNewCave(caves[1], cave2);
+            AddNewCave(cave1);
+            AddNewCave(cave2);
 
             _neighbours.Add(Tuple.Create(cave1.Name, cave2.Name));
         }
@@ -203,15 +199,11 @@ namespace AdventOfCode2021.AoC
         /// <summary>
         /// Add new cave to the list.
         /// </summary>
-        /// <param name="caveName">Cave name.</param>
         /// <param name="cave">Cave object.</param>
-        void AddNewCave(string caveName, Cave cave)
+        void AddNewCave(Cave cave)
         {
-            if (!_usedNames.Contains(caveName))
-            {
+            if (_caves.FirstOrDefault(c => c.Name == cave.Name) == null)
                 _caves.Add(cave);
-                _usedNames.Add(caveName);
-            }
         }
 
         public override void Solution1()
