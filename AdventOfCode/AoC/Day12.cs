@@ -25,7 +25,6 @@ namespace AdventOfCode2021.AoC
     {
         public Dictionary<string, HashSet<string>> NeighbourList { get; } = new();
         public List<Cave> Caves { get; private set; }
-        public int CaveCount() => Caves.Count;
 
         /// <summary>
         /// Sep up to create a Depth-first search structure.
@@ -66,16 +65,18 @@ namespace AdventOfCode2021.AoC
         private readonly Dictionary<string, List<int>> _pastVisits = new();
         private readonly CaveMap _map;
         private readonly int _part;
+        private readonly bool _logging;
 
         /// <summary>
         /// Pathbuilder classes containing logic to calculate all the valid paths.
         /// </summary>
         /// <param name="map">The cavemap system.</param>
         /// <param name="part">Part 1 || part 2.</param>
-        public PathBuilder(CaveMap map, int part)
+        public PathBuilder(CaveMap map, int part, bool logging)
         {
             _map = map;
             _part = part;
+            _logging = logging;
 
             foreach (var cave in _map.Caves)
                 _pastVisits.Add(cave.Name, new());
@@ -112,7 +113,8 @@ namespace AdventOfCode2021.AoC
                 if (nextCave.Name == "end")
                 {
                     PathCounter++;
-                    Console.WriteLine(string.Join(" ", pathList));
+                    if (_logging)
+                        Console.WriteLine(string.Join(" ", pathList));
                     continue;
                 }
 
@@ -193,7 +195,7 @@ namespace AdventOfCode2021.AoC
         public override void Solution1()
         {
             var caveMap = new CaveMap(_caves, _neighbours);
-            var pathBuilder = new PathBuilder(caveMap, 1);
+            var pathBuilder = new PathBuilder(caveMap, 1, false);
             var paths = pathBuilder.CalculatePaths();
 
             LogResults(12, 1, paths.ToString());
@@ -202,7 +204,7 @@ namespace AdventOfCode2021.AoC
         public override void Solution2()
         {
             var caveMap = new CaveMap(_caves, _neighbours);
-            var pathBuilder = new PathBuilder(caveMap, 2);
+            var pathBuilder = new PathBuilder(caveMap, 2, false);
             var paths = pathBuilder.CalculatePaths();
 
             LogResults(12, 2, paths.ToString());
