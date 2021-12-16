@@ -52,3 +52,4 @@
 
 var day13 = new Day13();
 day13.Solution1();
+day13.Solution2();

@@ -1,159 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2021.AoC
 {
     public class Day13 : AdventBase
     {
-        private readonly List<Coord> _coordinates;
+        private List<Dot> _dots;
         private readonly List<FoldAt> _folds;
-        private Paper[,] _paper;
 
-        record Coord(int X, int Y);
-        record FoldAt(char Axis, int Position);
-
-        class Paper
-        {
-            public Coord Coord { get; set; }
-            public bool IsFolded { get; set; }
-            public bool Remove { get; set; }
-
-            public Paper(Coord coord, bool isFolded)
-            {
-                Coord = coord;
-                IsFolded = isFolded;
-                Remove = false;
-            }
-        }
+        record Dot(int Col, int Row);
+        record FoldAt(bool X, int Position);
 
         public Day13()
         {
-            _coordinates = new();
+            _dots = new();
             _folds = new();
 
             List<string> input = Common.GetInput(13);
 
             ParseAllCoordinates(input);
             ParseAllFolds(input);
-            CreatePaper();
-            Fold();
         }
 
-        void Fold()
+        void DoFold(FoldAt fold)
         {
-            foreach (var fold in _folds)
+            _dots = _dots
+                .Select(dot => Fold(fold, dot))
+                .Distinct()
+                .ToList();
+        }
+
+        static Dot Fold(FoldAt fold, Dot dot)
+        {
+            if (fold.X)
             {
-                if (fold.Axis == 'y')
-                    FoldUp(fold.Position);
-                else
-                    FoldLeft(fold.Position);
+                if (dot.Col < fold.Position)
+                    return dot;
+
+                return new Dot(fold.Position - (dot.Col - fold.Position), dot.Row);
             }
-        }
-
-        void FoldUp(int position)
-        {
-            var foldCount = 0;
-            for (int i = 0; i < _paper.GetLength(0); i++)
-            {
-                if (i > position) foldCount += 2;
-                for (int j = 0; j < _paper.GetLength(1); j++)
-                {
-                    if (i > position)
-                    {
-                        if (!(_paper[i - foldCount, j].IsFolded) && _paper[i, j].IsFolded)
-                            _paper[i - foldCount, j].IsFolded = true;
-
-                        _paper[i, j].Remove = true;
-                    }
-                }
-            }
-
-            // Add 1 cos we also want to remove at the current position.
-            CleanUpPaper(position, true);
-            PrintFolderPaper();
-
-        }
-
-        void FoldLeft(int position)
-        {
-            var foldCount = 0;
-            for (int i = 0; i < _paper.GetLength(0); i++)
-            {
-                foldCount = 0;
-                for (int j = 0; j < _paper.GetLength(1); j++)
-                {
-                    foldCount += 2;
-                    if (j > position)
-                    {
-                        if (!(_paper[i, j - foldCount].IsFolded) && _paper[i, j].IsFolded)
-                            _paper[i, j - foldCount].IsFolded = true;
-
-                        _paper[i, j].Remove = true;
-                    }
-                }
-            }
-
-            // Add 1 cos we also want to remove at the current position.
-            CleanUpPaper(position + 1, false);
-            PrintFolderPaper();
-
-        }
-
-        void CleanUpPaper(int position, bool foldUp)
-        {
-            Paper[,] newPaper;
-
-            if (foldUp)
-                newPaper = new Paper[_paper.GetLength(0) - position, _paper.GetLength(1)];
             else
-                newPaper = new Paper[_paper.GetLength(0), _paper.GetLength(1) - position];
-
-            for (int i = 0; i < newPaper.GetLength(0); i++)
             {
-                for (int j = 0; j < newPaper.GetLength(1); j++)
-                {
-                    newPaper[i, j] = _paper[i, j];
-                }
+                if (dot.Row < fold.Position)
+                    return dot;
+
+                return new Dot(dot.Col, fold.Position - (dot.Row - fold.Position));
             }
-
-            _paper = newPaper;
-        }
-
-        void PrintFolderPaper()
-        {
-            for (int i = 0; i < _paper.GetLength(0); i++)
-            {
-                for (int j = 0; j < _paper.GetLength(1); j++)
-                {
-                    if (_paper[i, j].IsFolded)
-                        Console.Write(string.Format("{0} ", "#"));
-                    else
-                        Console.Write(string.Format("{0} ", "."));
-                }
-                Console.Write(Environment.NewLine);
-            }
-        }
-
-        void CreatePaper()
-        {
-            int rowCount = _coordinates.Max(x => x.Y);
-            int colCount = _coordinates.Max(x => x.X);
-            _paper = new Paper[rowCount, colCount];
-
-            for (int i = 0; i < rowCount; i++)
-                for (int j = 0; j < colCount; j++)
-                {
-                    Coord newPaperCoord = new(j, i);
-                    bool isFolded = false;
-
-                    if (_coordinates.Contains(newPaperCoord))
-                        isFolded = true;
-
-                    _paper[i, j] = new Paper(new Coord(j, i), isFolded);
-                }
         }
 
         void ParseAllCoordinates(List<string> input)
@@ -163,7 +56,7 @@ namespace AdventOfCode2021.AoC
                 if (input[i] == "")
                     break;
                 var coords = input[i].Split(",");
-                _coordinates.Add(new Coord(int.Parse(coords[0]), int.Parse(coords[1])));
+                _dots.Add(new Dot(int.Parse(coords[0]), int.Parse(coords[1])));
             }
         }
 
@@ -175,18 +68,36 @@ namespace AdventOfCode2021.AoC
             {
                 var foldInfo = input[j + foldsIndex].Remove(0, "fold along ".Length);
                 var foldAt = foldInfo.Split("=");
-                _folds.Add(new FoldAt(char.Parse(foldAt[0]), int.Parse(foldAt[1])));
+                _folds.Add(new FoldAt(foldAt[0] == "x", int.Parse(foldAt[1])));
             }
         }
 
         public override void Solution1()
         {
+            var fold = _folds.First();
+            DoFold(fold);
 
+            LogResults(13, 1, _dots.Count.ToString());
         }
 
         public override void Solution2()
         {
+            foreach (var fold in _folds)
+                DoFold(fold);
 
+            for (var i = 0; i < 6; i++)
+            {
+                for (var j = 0; j < 40; j++)
+                {
+                    char dot = _dots.Contains(new Dot(j, i))
+                        ? '#'
+                        : '.';
+                    Console.Write(dot);
+                }
+                Console.WriteLine();
+            }
+
+            LogResults(13, 2, _dots.Count.ToString());
         }
     }
 }
