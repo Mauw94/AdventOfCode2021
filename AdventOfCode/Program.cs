@@ -54,8 +54,8 @@
 //day13.Solution1();
 //day13.Solution2();
 
-//var day14 = new Day14();
-//day14.Solution1();
+var day14 = new Day14();
+day14.Solution1();
 
 //var day15 = new Day15();
 //day15.Solution1();
@@ -69,6 +69,6 @@
 //day17.Solution1();
 //day17.Solution2();
 
-var day18 = new Day18();
-day18.Solution1();
-day18.Solution2();
+//var day18 = new Day18();
+//day18.Solution1();
+//day18.Solution2();

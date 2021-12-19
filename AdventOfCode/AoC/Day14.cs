@@ -26,7 +26,21 @@ namespace AdventOfCode2021.AoC
                 _pairInsertions.Add(pairs[0], char.Parse(pairs[1]));
             }
 
-            CreateOccurences(_template);
+            CreateInsertionPairs(_template);
+        }
+
+        void CreateInsertionPairs(string template)
+        {
+            List<(char, char)> pairs = new();
+            char[] chars = template.ToCharArray();
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (i + 1 == chars.Length)
+                    break;
+
+                pairs.Add((chars[i], chars[i + 1]));
+            }
         }
 
         public override void Solution1()
@@ -36,16 +50,6 @@ namespace AdventOfCode2021.AoC
         public override void Solution2()
         {
             base.Solution2();
-        }
-
-        void CreateOccurences(string template)
-        {
-            var chars = template.ToCharArray();
-            foreach (var c in chars)
-            {
-                if (!_occurences.ContainsKey(c))
-                    _occurences.Add(c, 0);
-            }
         }
 
     }
