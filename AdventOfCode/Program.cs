@@ -71,3 +71,4 @@
 
 var day18 = new Day18();
 day18.Solution1();
+day18.Solution2();

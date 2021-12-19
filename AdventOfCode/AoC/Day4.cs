@@ -5,15 +5,27 @@ using System.Linq;
 
 namespace AdventOfCode2021.AoC
 {
+    record BingoTile(int Number)
+    {
+        public bool Marked { get; set; } = false;
+    }
+
     public class Day4 : AdventBase
     {
         public override void Solution1()
         {
             int boardCounter = 0;
             int columCounter = 0;
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day4.txt").ToList();
-            List<int> numbersToDraw = fileContent[0].Split(",").ToList().Select(x => int.Parse(x)).ToList();
-            Dictionary<int, BingoTile[,]> bingoBoards = new Dictionary<int, BingoTile[,]>
+
+            List<string> fileContent = Common.GetInput(4);
+            List<int> numbersToDraw = fileContent
+                .First()
+                .Split(",")
+                .ToList()
+                .Select(x => int.Parse(x))
+                .ToList();
+
+            Dictionary<int, BingoTile[,]> bingoBoards = new()
             {
                 { boardCounter, new BingoTile[5, 5] }
             };
@@ -50,23 +62,28 @@ namespace AdventOfCode2021.AoC
                         var winningNumber = numbersToDraw[i];
                         var sumUnmarked = SumAllUnmarkedNumbers(bingoBoard.Value);
                         i = numbersToDraw.Count - 1;
+
                         PrintBingoBoard(bingoBoard.Value);
-                        base.LogResults(4, 1, (winningNumber * sumUnmarked));
+                        LogResults(4, 1, (winningNumber * sumUnmarked));
                         break;
                     }
                 }
             }
-            //foreach (var bingoBoard in bingoBoards)
-            //    PrintBingoBoard(bingoBoard.Value);
         }
 
         public override void Solution2()
         {
-            List<string> fileContent = File.ReadAllLines("C:\\Projects\\AdventOfCode2021\\input\\day4.txt").ToList();
-            List<int> numbersToDraw = fileContent[0].Split(",").ToList().Select(x => int.Parse(x)).ToList();
-            Dictionary<int, BingoTile[,]> bingoBoards = new Dictionary<int, BingoTile[,]>();
+            List<string> fileContent = Common.GetInput(4);
+            List<int> numbersToDraw = fileContent
+                .First()
+                .Split(",")
+                .ToList()
+                .Select(x => int.Parse(x))
+                .ToList();
+
             int boardCounter = 0;
             int columCounter = 0;
+            Dictionary<int, BingoTile[,]> bingoBoards = new();
             bingoBoards.Add(boardCounter, new BingoTile[5, 5]);
 
             for (int i = 2; i < fileContent.Count; i++)
@@ -100,7 +117,6 @@ namespace AdventOfCode2021.AoC
                     if (bingo && bingoBoards.Count > 1)
                     {
                         bingo = false;
-                        //PrintBingoBoard(bingoBoard.Value);
                         if (bingoBoards.Count != 1)
                             bingoBoards.Remove(bingoBoard.Key);
                     }
@@ -109,8 +125,9 @@ namespace AdventOfCode2021.AoC
                         var winningNumber = numbersToDraw[i];
                         var sumUnmarked = SumAllUnmarkedNumbers(bingoBoard.Value);
                         i = numbersToDraw.Count - 1;
+
                         PrintBingoBoard(bingoBoard.Value);
-                        base.LogResults(4, 2, (winningNumber * sumUnmarked));
+                        LogResults(4, 2, (winningNumber * sumUnmarked));
                         break;
                     }
 
@@ -118,22 +135,22 @@ namespace AdventOfCode2021.AoC
             }
         }
 
-        private int SumAllUnmarkedNumbers(BingoTile[,] board)
+        private static int SumAllUnmarkedNumbers(BingoTile[,] board)
         {
             int sum = 0;
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    if (!board[i, j]._marked)
-                        sum += board[i, j]._number;
+                    if (!board[i, j].Marked)
+                        sum += board[i, j].Number;
                 }
             }
 
             return sum;
         }
 
-        private bool CheckForBingo(BingoTile[,] board, int drawnNumber)
+        private static bool CheckForBingo(BingoTile[,] board, int drawnNumber)
         {
             int rowLength = board.GetLength(0);
             int colLength = board.GetLength(1);
@@ -142,14 +159,14 @@ namespace AdventOfCode2021.AoC
             {
                 for (int j = 0; j < colLength; j++)
                 {
-                    if (board[i, j]._number == drawnNumber)
-                        board[i, j]._marked = true;
+                    if (board[i, j].Number == drawnNumber)
+                        board[i, j].Marked = true;
 
-                    if (board[i, 0]._marked && board[i, 1]._marked && board[i, 2]._marked && board[i, 3]._marked && board[i, 4]._marked)
+                    if (board[i, 0].Marked && board[i, 1].Marked && board[i, 2].Marked && board[i, 3].Marked && board[i, 4].Marked)
                     {
                         return true;
                     }
-                    if (board[0, j]._marked && board[1, j]._marked && board[2, j]._marked && board[3, j]._marked && board[4, j]._marked)
+                    if (board[0, j].Marked && board[1, j].Marked && board[2, j].Marked && board[3, j].Marked && board[4, j].Marked)
                     {
                         return true;
                     }
@@ -158,7 +175,7 @@ namespace AdventOfCode2021.AoC
             return false;
         }
 
-        private void PrintBingoBoard(BingoTile[,] board)
+        private static void PrintBingoBoard(BingoTile[,] board)
         {
             int rowLength = board.GetLength(0);
             int colLength = board.GetLength(1);
@@ -167,10 +184,10 @@ namespace AdventOfCode2021.AoC
             {
                 for (int j = 0; j < colLength; j++)
                 {
-                    if (board[i, j]._marked)
-                        Console.Write(string.Format("{0} ", board[i, j]._number + "*"));
+                    if (board[i, j].Marked)
+                        Console.Write(string.Format("{0} ", board[i, j].Number + "*"));
                     else
-                        Console.Write(string.Format("{0} ", board[i, j]._number));
+                        Console.Write(string.Format("{0} ", board[i, j].Number));
                 }
                 Console.Write(Environment.NewLine);
             }

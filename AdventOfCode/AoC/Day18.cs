@@ -15,9 +15,9 @@ namespace AdventOfCode2021.AoC
         {
             return new Node
             {
-                Left = Left,
-                Right = Right,
-                Value = Value ?? null,
+                Left = Left?.DeepCopy(),
+                Right = Right?.DeepCopy(),
+                Value = this.Value,
             };
         }
     }
@@ -35,52 +35,52 @@ namespace AdventOfCode2021.AoC
 
         bool Split(Node node)
         {
-            if (node.HasValue && node.Value > 10)
+            if (node.HasValue && node.Value >= 10)
             {
+                // Split
                 node.Left = new Node { Value = node.Value / 2 };
-                node.Right = new Node
-                {
-                    Value = node.Value / 2
-                    + (node.Value % 2 == 1 ? 1 : 0)
-                };
+                node.Right = new Node { Value = node.Value / 2 + (node.Value % 2 == 1 ? 1 : 0) };
                 node.Value = null;
-
                 return true;
             }
-
-            return !node.HasValue && (Split(node.Left) || Split(node.Right));
+            return node.HasValue ? false : (Split(node.Left) || Split(node.Right));
         }
 
         (int left, int right) Explode(Node node, int depth = 0)
         {
             if (!node.HasValue && node.Left.HasValue && node.Right.HasValue && depth > 3)
             {
-                var values = (node.Left.Value.Value, node.Right.Value.Value);
+                // Explode
+                var ret = (node.Left.Value.Value, node.Right.Value.Value);
                 node.Value = 0;
                 node.Left = null;
                 node.Right = null;
-
-                return values;
+                return ret;
             }
 
             if (node.HasValue)
+            {
                 return (0, 0);
+            }
 
             var (ll, rl) = Explode(node.Left, depth + 1);
             if (rl > 0)
             {
                 var child = node.Right;
                 while (!child.HasValue)
-                    child = child.Left; ;
+                {
+                    child = child.Left;
+                }
                 child.Value += rl;
             }
-
             var (lr, rr) = Explode(node.Right, depth + 1);
             if (lr > 0)
             {
                 var child = node.Left;
                 while (!child.HasValue)
-                    child = child.Left;
+                {
+                    child = child.Right;
+                }
                 child.Value += lr;
             }
             return (ll, rr);
@@ -88,11 +88,10 @@ namespace AdventOfCode2021.AoC
 
         void Reduce(Node node)
         {
-            bool changed;
+            bool changed = false;
             do
             {
-                node.Left.Value = Explode(node).left;
-                node.Right.Value = Explode(node).right;
+                Explode(node);
                 changed = Split(node);
             } while (changed);
         }
@@ -144,6 +143,18 @@ namespace AdventOfCode2021.AoC
             var result = _nodes.Aggregate(Add).Magnitude();
 
             LogResults(18, 1, result);
+        }
+
+        public override void Solution2()
+        {
+            var highestSum =
+                Enumerable.Range(0, _nodes.Count)
+                .SelectMany(i => Enumerable.Range(0, _nodes.Count)
+                .SelectMany(j => new[] { (i, j), (j, i) }))
+                .Select(pair => Add(_nodes[pair.Item1], _nodes[pair.Item2]).Magnitude())
+                .Max();
+
+            LogResults(18, 2, highestSum);
         }
     }
 }
