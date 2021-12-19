@@ -29,7 +29,7 @@ namespace AdventOfCode2021.AoC
                 overlaps += FindOverlaps(line);
             }
 
-            base.LogResults(5, 1, overlaps.ToString());
+            base.LogResults(5, 1, overlaps);
         }
 
         public override void Solution2()
@@ -42,7 +42,7 @@ namespace AdventOfCode2021.AoC
                 overlaps += FindOverlaps(line);
             }
 
-            base.LogResults(5, 1, overlaps.ToString());
+            base.LogResults(5, 1, overlaps);
         }
 
         private int FindOverlaps(int[] line)

@@ -41,7 +41,7 @@ namespace AdventOfCode2021.AoC
                 }
             }
 
-            LogResults(8, 1, occurence.ToString());
+            LogResults(8, 1, occurence);
         }
 
         public override void Solution2()
@@ -123,7 +123,7 @@ namespace AdventOfCode2021.AoC
                 totalCount += int.Parse(decodedDigit);
             }
 
-            LogResults(8, 2, totalCount.ToString());
+            LogResults(8, 2, totalCount);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace AdventOfCode2021.AoC
                 }
             }
 
-            base.LogResults(6, 1, fishes.Count.ToString());
+            base.LogResults(6, 1, fishes.Count);
         }
 
         private void PopulateLaternFishThatNeverDie(List<int> fishes)
@@ -94,7 +94,7 @@ namespace AdventOfCode2021.AoC
                 sum += fishAgeGroup;
             }
 
-            base.LogResults(6, 2, fishLives.Values.Sum().ToString());
+            base.LogResults(6, 2, fishLives.Values.Sum());
         }
 
         private void UpdateDictionary(Dictionary<long, long> fishLives, long key, long amount)

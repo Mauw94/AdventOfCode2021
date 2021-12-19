@@ -77,7 +77,7 @@ namespace AdventOfCode2021.AoC
             var fold = _folds.First();
             DoFold(fold);
 
-            LogResults(13, 1, _dots.Count.ToString());
+            LogResults(13, 1, _dots.Count);
         }
 
         public override void Solution2()
@@ -97,7 +97,7 @@ namespace AdventOfCode2021.AoC
                 Console.WriteLine();
             }
 
-            LogResults(13, 2, _dots.Count.ToString());
+            LogResults(13, 2, _dots.Count);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace AdventOfCode2021.AoC
                 }
             }
 
-            LogResults(10, 1, score.ToString());
+            LogResults(10, 1, score);
         }
 
         public override void Solution2()
@@ -70,7 +70,7 @@ namespace AdventOfCode2021.AoC
             }
 
             scores.Sort();
-            LogResults(10, 2, scores[scores.Count / 2].ToString());
+            LogResults(10, 2, scores[scores.Count / 2]);
         }
 
         Result CheckLine(string line)

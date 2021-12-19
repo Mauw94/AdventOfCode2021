@@ -83,7 +83,7 @@ namespace AdventOfCode2021.AoC
             gamma = Convert.ToInt32(binaryGamma, 2);
             epsilon = Convert.ToInt32(binaryEpsilon, 2);
 
-            base.LogResults(3, 1, (gamma * epsilon).ToString());
+            base.LogResults(3, 1, (gamma * epsilon));
         }
 
         public override void Solution2()
@@ -135,7 +135,7 @@ namespace AdventOfCode2021.AoC
             {
                 if (fileContent.Count == 1)
                 {
-                    base.LogResults(3, 2, "Oxyen generator rating: " + Convert.ToInt32(fileContent[0], 2));
+                    base.LogResults(3, 2, Convert.ToInt32(fileContent[0], 2));
                     return;
                 }
                 DetermineOxygenRating(bits, fileContent, global);
@@ -144,7 +144,7 @@ namespace AdventOfCode2021.AoC
             {
                 if (fileContent.Count == 1)
                 {
-                    base.LogResults(3, 2, "CO2 scrubber rating: " + Convert.ToInt32(fileContent[0], 2));
+                    base.LogResults(3, 2, Convert.ToInt32(fileContent[0], 2));
                     return;
                 }
                 DetermineCO2Rating(bits, fileContent, global);

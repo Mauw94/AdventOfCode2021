@@ -212,7 +212,7 @@ namespace AdventOfCode2021.AoC
             var pathBuilder = new PathBuilder(caveMap, 1, false);
             var paths = pathBuilder.CalculatePaths();
 
-            LogResults(12, 1, paths.ToString());
+            LogResults(12, 1, paths);
         }
 
         public override void Solution2()
@@ -221,7 +221,7 @@ namespace AdventOfCode2021.AoC
             var pathBuilder = new PathBuilder(caveMap, 2, false);
             var paths = pathBuilder.CalculatePaths();
 
-            LogResults(12, 2, paths.ToString());
+            LogResults(12, 2, paths);
         }
     }
 }

@@ -14,9 +14,9 @@ namespace AdventOfCode2021.AoC
             throw new NotImplementedException();
         }
 
-        public virtual void LogResults(int day, int solution, string result)
+        public virtual void LogResults(int day, int solution, long result)
         {
-            Console.WriteLine("Day: " + day.ToString() + "\tSolution: " + solution.ToString() + "\tResult: " + result + "\n");
+            Console.WriteLine("Day: " + day.ToString() + "\tSolution: " + solution.ToString() + "\tResult: " + result.ToString() + "\n");
         }
     }
 }

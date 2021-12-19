@@ -4,7 +4,7 @@
     {
         void Solution1();
         void Solution2();
-        void LogResults(int day, int solution, string result);
+        void LogResults(int day, int solution, long result);
 
     }
 }

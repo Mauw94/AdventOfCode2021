@@ -37,7 +37,7 @@ namespace AdventOfCode2021.AoC
                 totalFuelCost += fuel;
             }
 
-            base.LogResults(7, 1, totalFuelCost.ToString());
+            base.LogResults(7, 1, totalFuelCost);
         }
 
         public override void Solution2()
@@ -47,7 +47,7 @@ namespace AdventOfCode2021.AoC
 
             CalculateFuelCost(_crabPositions, medianFuelCost, possibleFuelCosts);
 
-            base.LogResults(7, 2, _resultSol2.ToString());
+            base.LogResults(7, 2, _resultSol2);
         }
 
         // Lol...
@@ -71,7 +71,7 @@ namespace AdventOfCode2021.AoC
                 totalFuelCost += adjustFuelCost;
             }
 
-            base.LogResults(7, 3, _resultSol2.ToString());
+            base.LogResults(7, 3, _resultSol2);
         }
 
         private void CalculateFuelCost(List<int> crabPositions, int medianFuelCost, List<int> possibleFuelCosts)

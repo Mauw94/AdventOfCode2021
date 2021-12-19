@@ -149,7 +149,7 @@ namespace AdventOfCode2021.AoC
             for (int i = 0; i < _steps; i++)
                 cavern.Step();
 
-            LogResults(11, 1, cavern.FlashedCounter.ToString());
+            LogResults(11, 1, cavern.FlashedCounter);
         }
 
         public override void Solution2()
@@ -163,7 +163,7 @@ namespace AdventOfCode2021.AoC
                 steps++;
             } while (!cavern.AllFlashed());
 
-            LogResults(11, 2, steps.ToString());
+            LogResults(11, 2, steps);
         }
     }
 }

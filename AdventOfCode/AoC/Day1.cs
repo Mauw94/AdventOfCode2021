@@ -28,7 +28,7 @@ namespace AdventOfCode2021.AoC
                 }
             }
 
-            LogResults(1, 1, increased.ToString());
+            LogResults(1, 1, increased);
         }
 
         public override void Solution2()
@@ -56,7 +56,7 @@ namespace AdventOfCode2021.AoC
                 }
             }
 
-            LogResults(1, 2, increased.ToString());
+            LogResults(1, 2, increased);
         }
     }
 }

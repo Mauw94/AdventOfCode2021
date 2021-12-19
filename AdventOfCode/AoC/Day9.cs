@@ -41,7 +41,7 @@ namespace AdventOfCode2021.AoC
             foreach (var point in FindLowPoints())
                 risk += HeightAt(point) + 1;
 
-            LogResults(9, 1, risk.ToString());
+            LogResults(9, 1, risk);
         }
 
         public override void Solution2()
@@ -59,7 +59,7 @@ namespace AdventOfCode2021.AoC
                 .Select(b => b.Count)
                 .Product();
 
-            LogResults(9, 2, size.ToString());
+            LogResults(9, 2, size);
         }
 
         List<Coord> FindLowPoints()

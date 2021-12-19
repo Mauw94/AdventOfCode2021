@@ -30,7 +30,7 @@ namespace AdventOfCode2021.AoC
                     depth += amount;
             }
 
-            base.LogResults(2, 1, (depth * horizontalPos).ToString());
+            base.LogResults(2, 1, (depth * horizontalPos));
         }
 
         public override void Solution2()
@@ -58,7 +58,7 @@ namespace AdventOfCode2021.AoC
                     aim += amount;
             }
 
-            base.LogResults(2, 2, (depth * horizontalPos).ToString());
+            base.LogResults(2, 2, (depth * horizontalPos));
         }
     }
 }

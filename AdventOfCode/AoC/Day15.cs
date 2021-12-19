@@ -173,7 +173,7 @@ namespace AdventOfCode2021.AoC
             var cavernMap = new CavernMap(_riskLevels, 1);
             int risk = cavernMap.ShortestDiagonal();
 
-            LogResults(15, 1, risk.ToString());
+            LogResults(15, 1, risk);
         }
 
         public override void Solution2()
@@ -181,7 +181,7 @@ namespace AdventOfCode2021.AoC
             var cavernMap = new CavernMap(_riskLevels, 5);
             int risk = cavernMap.ShortestDiagonal();
 
-            LogResults(15, 1, risk.ToString());
+            LogResults(15, 1, risk);
         }
     }
 }

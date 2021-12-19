@@ -51,7 +51,7 @@ namespace AdventOfCode2021.AoC
                         var sumUnmarked = SumAllUnmarkedNumbers(bingoBoard.Value);
                         i = numbersToDraw.Count - 1;
                         PrintBingoBoard(bingoBoard.Value);
-                        base.LogResults(4, 1, (winningNumber * sumUnmarked).ToString());
+                        base.LogResults(4, 1, (winningNumber * sumUnmarked));
                         break;
                     }
                 }
@@ -110,7 +110,7 @@ namespace AdventOfCode2021.AoC
                         var sumUnmarked = SumAllUnmarkedNumbers(bingoBoard.Value);
                         i = numbersToDraw.Count - 1;
                         PrintBingoBoard(bingoBoard.Value);
-                        base.LogResults(4, 2, (winningNumber * sumUnmarked).ToString());
+                        base.LogResults(4, 2, (winningNumber * sumUnmarked));
                         break;
                     }
 

@@ -86,12 +86,12 @@ namespace AdventOfCode2021.AoC
 
         public override void Solution1()
         {
-            LogResults(17, 1, Simulate().Highest.ToString());
+            LogResults(17, 1, Simulate().Highest);
         }
 
         public override void Solution2()
         {
-            LogResults(17, 1, Simulate().Hits.ToString());
+            LogResults(17, 1, Simulate().Hits);
         }
     }
 }

@@ -284,14 +284,14 @@ namespace AdventOfCode2021.AoC
         {
             long sum = Evaluate(p => p.VersionSum());
 
-            LogResults(16, 1, sum.ToString());
+            LogResults(16, 1, sum);
         }
 
         public override void Solution2()
         {
             long value = Evaluate(p => p.Value());
 
-            LogResults(16, 2, value.ToString());
+            LogResults(16, 2, value);
         }
 
         long Evaluate(Func<BasePacket, long> valueGetter)
