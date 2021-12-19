@@ -18,7 +18,7 @@ namespace AdventOfCode2021.AoC
 
             CalculateQuantityFromPolymer(input.First());
             CreateRules(input);
-            AddPairCounts(input.First());
+            AddPairCountsFromPolymer(input.First());
         }
 
         void CalculateQuantityFromPolymer(string polymer)
@@ -36,15 +36,19 @@ namespace AdventOfCode2021.AoC
         {
             for (int i = 2; i < input.Count; i++)
             {
-                char element = input[i].Substring(input[i].Length - 1, 1).ToCharArray()[0];
+                char elementToInsert = input[i]
+                    .Substring(input[i].Length - 1, 1).ToCharArray()[0];
 
-                _pairs.Add(input[i][..2], 0);
-                _pairsFromRule.Add(input[i][..2],
-                    new(input[i][..1] + element, element + input[i].Substring(1, 1)));
+                var pair = input[i][..2];
+
+                _pairs.Add(pair, 0);
+                _pairsFromRule.Add(
+                    pair,
+                    new(input[i][..1] + elementToInsert, elementToInsert + input[i].Substring(1, 1)));
             }
         }
 
-        void AddPairCounts(string polymer)
+        void AddPairCountsFromPolymer(string polymer)
         {
             for (int i = 1; i < polymer.Length; i++)
             {
@@ -57,6 +61,7 @@ namespace AdventOfCode2021.AoC
             for (int i = 0; i < steps; i++)
             {
                 var currentPairs = new Dictionary<string, long>(_pairs);
+
                 foreach (var pair in _pairs)
                 {
                     if (pair.Value > 0)
