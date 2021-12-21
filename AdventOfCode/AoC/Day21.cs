@@ -84,8 +84,7 @@ namespace AdventOfCode2021.AoC
             for (int i = 0; i < playerCount; i++)
             {
                 var startingPos = int.Parse(input[i].Substring(input[i].Length - 1, 1));
-                var player = new Player(startingPos);
-                _players.Add(player);
+                _players.Add(new Player(startingPos));
             }
         }
 
